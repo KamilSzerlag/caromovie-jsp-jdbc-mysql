@@ -4,6 +4,7 @@ import model.Movie;
 import model.MovieDatabaseUtil;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/ServletMovieController")
 public class ServletMovieController extends HttpServlet {
@@ -30,7 +32,11 @@ public class ServletMovieController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    addMovie(request,response);
+    try {
+        moviesList(request,response);
+    }catch (Exception e){
+        e.getMessage();
+    }
 
     }
 
@@ -41,6 +47,15 @@ public class ServletMovieController extends HttpServlet {
         Movie movie = new Movie(title,year);
         System.out.println(movie.getTitle() + movie.getYear());
         MovieDatabaseUtil.getInstance().addMovie(movie);
+    }
+
+    private void moviesList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        List<Movie> movies = MovieDatabaseUtil.getInstance().getMovies();
+
+        request.setAttribute("MOVIELIST",movies);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
+        dispatcher.forward(request, response);
     }
 
 }
