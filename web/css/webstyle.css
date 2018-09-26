@@ -1,0 +1,35 @@
+/*
+.container{
+    background-color: #ffd900;
+}
+
+.page-header{
+}*/
+#add-button{
+    border-radius: 100px;
+}
+#minus-button{
+    border-radius: 100px;
+}
+.fa-plus{
+    font-size: 80px;
+}
+.top-buffer{
+    margin-top: 1em;
+}
+.fa-minus{
+    font-size: 10px;
+}
+
+.fas.fa-heart{
+    color: crimson;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+    align-content: center;
+    alignment: center}

@@ -26,14 +26,13 @@ public class ServletMovieController extends HttpServlet {
         MovieDatabaseUtil.getInstance().setDataSource(dataSource);
     }
 
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
-
+    //TODO Update doGet method for different methods used in JSP file
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
-        moviesList(request,response);
+        deleteMovie(request, response);
     }catch (Exception e){
         e.getMessage();
     }
@@ -56,6 +55,31 @@ public class ServletMovieController extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
         dispatcher.forward(request, response);
+    }
+
+
+    private void updateStatus(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+        try {
+            Movie movie = MovieDatabaseUtil.getInstance().getMovie(request.getParameter("title"));
+            System.out.println("SERVLET UPDATE STATUS METHOD: Movie title: "+movie.getTitle());
+            MovieDatabaseUtil.getInstance().updateMovie(movie);
+        }catch (Exception e){
+            System.out.println("Can't get movie from database" + e.getMessage());
+        }
+        moviesList(request,response);
+    }
+
+    private void deleteMovie(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+        try {
+            Movie movie = MovieDatabaseUtil.getInstance().getMovie(request.getParameter("title"));
+            System.out.println("SERVLET DELETE METHOD : Movie title: "+movie.getTitle());
+            MovieDatabaseUtil.getInstance().deleteMovie(movie);
+        }catch (Exception e){
+            System.out.println("Can't delete movie from database"+e.getMessage());
+        }
+        moviesList(request,response);
     }
 
 }
