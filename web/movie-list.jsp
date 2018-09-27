@@ -23,7 +23,7 @@
     <div class="page-header">
         <div class="row">
             <div class="col-lg-6" align="left">
-                <h2>Your movies list</h2>
+                <h2 style="color: darkcyan"><b style="color: hotpink"><i>Caro</i></b>Movies</h2>
             </div>
             <div class="col-lg-6" align="right">
                 <h3>because we <i class="fas fa-heart"></i> movies </h3>
@@ -31,6 +31,7 @@
         </div>
     </div>
     <div class="row">
+        <form action="ServletMovieController" method="get">
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -38,16 +39,18 @@
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <div class="row top-buffer">
-                <input type="text" name="name" id="inputID1" class="form-control" value="Title" title="Title" required="required">
+                <input type="text" name="title" class="form-control" value="title" title="Title"
+                       required="required">
             </div>
             <div class="row top-buffer">
-                <input type="text" name="name" id="inputID2" class="form-control" value="Director" title="Title" required="required">
+                <input type="text" name="year" class="form-control" value="year" title="Year"
+                       required="required">
             </div>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
         </div>
-
+        </form>
     </div>
     <div class="row top-buffer">
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -56,15 +59,31 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>TITLE</th>
-                    <th>DIRECTOR</th>
+                    <th>Title</th>
+                    <th>Director</th>
+                    <th>Status</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>WOJCIECH</td>
-                    <td>SMAŻOWSKI</td>
-                </tr>
+                <form action="ServletMovieController" method="get">
+                    <c:forEach var="tempMovie" items="${MOVIE_LIST}">
+                        <tr>
+
+                            <td>${tempMovie.title}</td>
+                            <td>${tempMovie.year}</td>
+                            <td><c:choose>
+                                <c:when test="${tempMovie.watched==true}"><i class="far fa-thumbs-up"></i></c:when>
+                                <c:otherwise><i class="far fa-times-circle"></i></c:otherwise>
+                            </c:choose></td>
+                            <td class="for-align">
+                                <button id="minus-button" class="btn top-buffer for-table" type="submit"><i
+                                        class="fas fa-minus"></i></button>
+                            </td>
+
+                        </tr>
+                    </c:forEach>
+                </form>
                 </tbody>
             </table>
         </div>

@@ -32,7 +32,8 @@ public class ServletMovieController extends HttpServlet {
     //TODO Update doGet method for different methods used in JSP file
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
-        deleteMovie(request, response);
+        moviesList(request,response);
+        addMovie(request,response);
     }catch (Exception e){
         e.getMessage();
     }
@@ -51,7 +52,7 @@ public class ServletMovieController extends HttpServlet {
     private void moviesList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Movie> movies = MovieDatabaseUtil.getInstance().getMovies();
 
-        request.setAttribute("MOVIELIST",movies);
+        request.setAttribute("MOVIE_LIST",movies);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
         dispatcher.forward(request, response);
