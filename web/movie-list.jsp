@@ -32,24 +32,26 @@
     </div>
     <div class="row">
         <form action="ServletMovieController" method="get">
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <button id="add-button" class="btn top-buffer" type="submit"><i class="fas fa-plus"></i></button>
-        </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <div class="row top-buffer">
-                <input type="text" name="title" class="form-control" value="title" title="Title"
-                       required="required">
+            <input type="hidden" name="command" value="ADD">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
             </div>
-            <div class="row top-buffer">
-                <input type="text" name="year" class="form-control" value="year" title="Year"
-                       required="required">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <button id="add-button" class="btn top-buffer" type="submit" onclick=""><i class="fas fa-plus"></i></button>
             </div>
-        </div>
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="row top-buffer">
+                    <input type="text" name="title" class="form-control" value="title" title="Title"
+                           required="required">
+                </div>
+                <div class="row top-buffer">
+                    <input type="text" name="year" class="form-control" value="year" title="Year"
+                           required="required">
+                </div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
-        </div>
+            </div>
+            </input>
         </form>
     </div>
     <div class="row top-buffer">
@@ -67,6 +69,7 @@
                 </thead>
                 <tbody>
                 <form action="ServletMovieController" method="get">
+
                     <c:forEach var="tempMovie" items="${MOVIE_LIST}">
                         <tr>
 
@@ -77,8 +80,10 @@
                                 <c:otherwise><i class="far fa-times-circle"></i></c:otherwise>
                             </c:choose></td>
                             <td class="for-align">
-                                <button id="minus-button" class="btn top-buffer for-table" type="submit"><i
+                                <input type="hidden" name="command" value="DELETE">
+                                <button id="minus-button" class="btn top-buffer for-table" type="submit" name="title" value="${tempMovie.title}"><i
                                         class="fas fa-minus"></i></button>
+                                </input>
                             </td>
 
                         </tr>

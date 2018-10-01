@@ -33,7 +33,11 @@ public class ServletMovieController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
         moviesList(request,response);
-        addMovie(request,response);
+        if (request.getParameter("command").equals("ADD"))
+            addMovie(request,response);
+        if (request.getParameter("command").equals("DELETE"))
+            deleteMovie(request,response);
+
     }catch (Exception e){
         e.getMessage();
     }
@@ -47,6 +51,11 @@ public class ServletMovieController extends HttpServlet {
         Movie movie = new Movie(title,year);
         System.out.println(movie.getTitle() + movie.getYear());
         MovieDatabaseUtil.getInstance().addMovie(movie);
+        try{
+            moviesList(request,response);
+        }catch (Exception e) {
+            System.out.println("Can't reach Movies List");
+        }
     }
 
     private void moviesList(HttpServletRequest request, HttpServletResponse response) throws Exception {
