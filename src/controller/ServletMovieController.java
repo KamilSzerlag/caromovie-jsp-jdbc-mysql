@@ -1,5 +1,6 @@
 package controller;
 
+import feature.ProgressBar;
 import model.Movie;
 import model.MovieDatabaseUtil;
 
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.List;
@@ -27,20 +29,32 @@ public class ServletMovieController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            moviesList(request, response);
+
+            if (request.getParameter("command").equals("UPDATE_PROGRESS"))
+                updateProgressBar(request, response);
+
+            moviesList(request, response);
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
     }
+
     //TODO Update doGet method for different methods used in JSP file
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    try {
-        moviesList(request,response);
-        if (request.getParameter("command").equals("ADD"))
-            addMovie(request,response);
-        if (request.getParameter("command").equals("DELETE"))
-            deleteMovie(request,response);
+        try {
+            moviesList(request, response);
+            if (request.getParameter("command").equals("ADD"))
+                addMovie(request, response);
+            if (request.getParameter("command").equals("DELETE"))
+                deleteMovie(request, response);
 
-    }catch (Exception e){
-        e.getMessage();
-    }
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
     }
 
@@ -48,12 +62,12 @@ public class ServletMovieController extends HttpServlet {
         String title = request.getParameter("title");
         String year = request.getParameter("year");
 
-        Movie movie = new Movie(title,year);
+        Movie movie = new Movie(title, year);
         System.out.println(movie.getTitle() + movie.getYear());
         MovieDatabaseUtil.getInstance().addMovie(movie);
-        try{
-            moviesList(request,response);
-        }catch (Exception e) {
+        try {
+            moviesList(request, response);
+        } catch (Exception e) {
             System.out.println("Can't reach Movies List");
         }
     }
@@ -61,35 +75,45 @@ public class ServletMovieController extends HttpServlet {
     private void moviesList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Movie> movies = MovieDatabaseUtil.getInstance().getMovies();
 
-        request.setAttribute("MOVIE_LIST",movies);
+        request.setAttribute("MOVIE_LIST", movies);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
         dispatcher.forward(request, response);
     }
 
 
-    private void updateStatus(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    private void updateStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         try {
             Movie movie = MovieDatabaseUtil.getInstance().getMovie(request.getParameter("title"));
-            System.out.println("SERVLET UPDATE STATUS METHOD: Movie title: "+movie.getTitle());
+            System.out.println("SERVLET UPDATE STATUS METHOD: Movie title: " + movie.getTitle());
             MovieDatabaseUtil.getInstance().updateMovie(movie);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Can't get movie from database" + e.getMessage());
         }
-        moviesList(request,response);
+        moviesList(request, response);
     }
 
-    private void deleteMovie(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    private void deleteMovie(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         try {
             Movie movie = MovieDatabaseUtil.getInstance().getMovie(request.getParameter("title"));
-            System.out.println("SERVLET DELETE METHOD : Movie title: "+movie.getTitle());
+            System.out.println("SERVLET DELETE METHOD : Movie title: " + movie.getTitle());
             MovieDatabaseUtil.getInstance().deleteMovie(movie);
-        }catch (Exception e){
-            System.out.println("Can't delete movie from database"+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Can't delete movie from database" + e.getMessage());
         }
-        moviesList(request,response);
+        moviesList(request, response);
+    }
+
+    private void updateProgressBar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ProgressBar progressBar = new ProgressBar();
+        String progress = progressBar.progressCalculatorMovies();
+        HttpSession session = request.getSession();
+        session.setAttribute("PROGRESS", progress);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
+        dispatcher.forward(request, response);
+
     }
 
 }

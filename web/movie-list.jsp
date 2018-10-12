@@ -36,7 +36,8 @@
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <button id="add-button" class="btn top-buffer" type="submit" onclick=""><i class="fas fa-plus"></i></button>
+                <button id="add-button" class="btn top-buffer" type="submit" onclick=""><i class="fas fa-plus"></i>
+                </button>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <div class="row top-buffer">
@@ -81,7 +82,8 @@
                             </c:choose></td>
                             <td class="for-align">
                                 <input type="hidden" name="command" value="DELETE">
-                                <button id="minus-button" class="btn top-buffer for-table" type="submit" name="title" value="${tempMovie.title}"><i
+                                <button id="minus-button" class="btn top-buffer for-table" type="submit" name="title"
+                                        value="${tempMovie.title}"><i
                                         class="fas fa-minus"></i></button>
                                 </input>
                             </td>
@@ -95,58 +97,33 @@
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
         </div>
     </div>
+    <div class="row top-buffer">
+        <form action="ServletMovieController" method="post">
+            <input type="hidden" name="command" value="UPDATE_PROGRESS">
+            <div class="progress">
+                <c:set var="progress" value="${PROGRESS}" scope="session"></c:set>
+                    <div class="progress-bar" role="progressbar" style="width: ${progress}%; background: hotpink" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100">${progress}%</div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
+                <button type="submit" class="btn btn-primary" style="background: darkcyan; border-color: darkcyan;">Update progress</button>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ">
+
+            </div>
+
+            </input>
+        </form>
+    </div>
 </div>
-<footer class="footer">
+<%--<footer class="footer">
     <div class="container" align="center">
         <span class="text-muted">Created by<i class="fas fa-user-astronaut"></i> Kamil Szerląg</span>
     </div>
-</footer>
+</footer>--%>
 </body>
 </html>
-<%--<form action="ServletMovieController" method="GET">
-    <table align="center">
 
-        <tr>
-            <td><label>TITLE:</label></td>
-            <td><input type="text" name="title"></td>
-        </tr>
-
-        <tr>
-            <td><label>YEAR:</label></td>
-            <td><input type="text" name="year"></td>
-        </tr>
-        <tr>
-            <td><label></label></td>
-            <td><input type="submit" value="Save" class="save" /></td>
-        </tr>
-    </table>
-</form>
-    <table align="center">
-
-        <form action="ServletMovieController" method="get">
-
-        <tr>
-            <th>TITLE</th>
-            <th>YEAR</th>
-            <th>WATCHED</th>
-            <th></th>
-
-        <tr>
-        <c:forEach var="tempMovie" items="${MOVIELIST}">
-                <c:url var="tempLink" value="ServletMovieController">
-                <c:param name="command" value="LOAD" />
-                <c:param name="movieId" value="${tempMovie.id}" />
-            </c:url>
-        <tr>
-
-            <td>${tempMovie.title}</td>
-            <td>${tempMovie.year}</td>
-            <td>${tempMovie.watched}</td>
-            <td><input type="submit" name="title" value="${tempMovie.title}" ></td>
-
-        </tr>
-        </c:forEach>
-        </form>
-    </table>
---%>
 

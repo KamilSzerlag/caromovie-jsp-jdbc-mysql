@@ -1,11 +1,12 @@
 package feature;
 
+import com.sun.javafx.binding.StringFormatter;
 import model.Movie;
 import model.MovieDatabaseUtil;
 
 public class ProgressBar {
-    private int allElements;
-    private int doneElements;
+    private double allElements;
+    private double doneElements;
 
     public ProgressBar() {
         this.allElements=0;
@@ -19,13 +20,13 @@ public class ProgressBar {
     private int getNumberOfDoneMovies() {
         int numberOfWatchedMovies=0;
         for (Movie m: MovieDatabaseUtil.getInstance().getMovies()) {
-            if(m.isWatched());
+            if(m.isWatched())
                 numberOfWatchedMovies++;
         }
         return numberOfWatchedMovies;
     }
 
-    private int getAllElements() {
+    private double getAllElements() {
         return allElements;
     }
 
@@ -33,7 +34,7 @@ public class ProgressBar {
         this.allElements = allElements;
     }
 
-    private int getDoneElements() {
+    private double getDoneElements() {
         return doneElements;
     }
 
@@ -41,10 +42,10 @@ public class ProgressBar {
         this.doneElements = doneElements;
     }
 
-    public int progressCalculatorMovies() {
+    public String progressCalculatorMovies() {
         setAllElements(getNumberOfMovies());
         setDoneElements(getNumberOfDoneMovies());
 
-        return (getNumberOfDoneMovies()/getNumberOfMovies())*100;
+        return  String.format("%.0f",(getDoneElements()/getAllElements())*100);
     }
 }
