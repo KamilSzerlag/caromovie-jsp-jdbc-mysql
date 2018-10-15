@@ -57,6 +57,29 @@
     </div>
 
     <div class="row top-buffer">
+        <form action="ServletMovieController" method="get">
+            <input type="hidden" name="command" value="SEARCH_IN_TMDB">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <button type="submit">Szukaj...</button>
+
+            <input type="text" name="title_themoviedb" title="title_themoviedb" class="form-control">
+
+            <input type="text" name="year_themoviedb"  title="year_themoviedb"  class="form-control">
+            <ul class="list-group" id="myList">
+                <c:forEach var="tempMovieTmdb" items="${TMDB_LIST}">
+                <li class="list-group-item">${tempMovieTmdb.title}</li>
+                </c:forEach>
+            </ul>
+            </input>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        </div>
+        </form>
+    </div>
+
+    <div class="row top-buffer">
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -103,13 +126,17 @@
             <input type="hidden" name="command" value="UPDATE_PROGRESS">
             <div class="progress">
                 <c:set var="progress" value="${PROGRESS}" scope="session"></c:set>
-                    <div class="progress-bar" role="progressbar" style="width: ${progress}%; background: hotpink" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100">${progress}%</div>
+                <div class="progress-bar" role="progressbar" style="width: ${progress}%; background: hotpink"
+                     aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100">${progress}%
+                </div>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
-                <button type="submit" class="btn btn-primary" style="background: darkcyan; border-color: darkcyan;">Update progress</button>
+                <button type="submit" class="btn btn-primary" style="background: darkcyan; border-color: darkcyan;">
+                    Update progress
+                </button>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ">
 

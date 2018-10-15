@@ -1,6 +1,8 @@
 package controller;
 
 import feature.ProgressBar;
+import feature.TheMovieDbApiUtil;
+import info.movito.themoviedbapi.model.MovieDb;
 import model.Movie;
 import model.MovieDatabaseUtil;
 
@@ -51,7 +53,8 @@ public class ServletMovieController extends HttpServlet {
                 addMovie(request, response);
             if (request.getParameter("command").equals("DELETE"))
                 deleteMovie(request, response);
-
+            if (request.getParameter("command").equals("SEARCH_IN_TMDB"))
+                searchInTmdb(request, response);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -63,7 +66,7 @@ public class ServletMovieController extends HttpServlet {
         String year = request.getParameter("year");
 
         Movie movie = new Movie(title, year);
-        System.out.println(movie.getTitle() + movie.getYear());
+        System.out.println(movie.getTitle() + " " + movie.getYear());
         MovieDatabaseUtil.getInstance().addMovie(movie);
         try {
             moviesList(request, response);
@@ -114,6 +117,24 @@ public class ServletMovieController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
         dispatcher.forward(request, response);
 
+    }
+
+    private void searchInTmdb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String title = request.getParameter("title_themoviedb");
+        String year = request.getParameter("year_themoviedb");
+        System.out.println("title " +title+" year "+year);
+        int year_int = Integer.parseInt(year);
+        List<MovieDb> movies = TheMovieDbApiUtil.getInstance().getListFoundMovies(title, year_int);
+        if(movies.isEmpty())
+            System.out.println("Lista pusta");
+        for (MovieDb m : movies) {
+            System.out.println(m.getTitle());
+        }
+        System.out.println("AAAAAAAAAAaa!");
+        moviesList(request, response);
+       /* request.setAttribute("TMDB_LIST", movies);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
+        dispatcher.forward(request, response);*/
     }
 
 }
