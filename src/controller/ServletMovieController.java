@@ -9,6 +9,7 @@ import model.MovieDatabaseUtil;
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HandlesTypes;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -120,21 +121,16 @@ public class ServletMovieController extends HttpServlet {
     }
 
     private void searchInTmdb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        List<MovieDb> movieDbs;
         String title = request.getParameter("title_themoviedb");
         String year = request.getParameter("year_themoviedb");
-        System.out.println("title " +title+" year "+year);
+        System.out.println("title " + title + " year " + year);
         int year_int = Integer.parseInt(year);
-        List<MovieDb> movies = TheMovieDbApiUtil.getInstance().getListFoundMovies(title, year_int);
-        if(movies.isEmpty())
-            System.out.println("Lista pusta");
-        for (MovieDb m : movies) {
-            System.out.println(m.getTitle());
-        }
-        System.out.println("AAAAAAAAAAaa!");
-        moviesList(request, response);
-       /* request.setAttribute("TMDB_LIST", movies);
+        movieDbs = TheMovieDbApiUtil.getInstance().getListFoundMovies(title, year_int);
+
+        request.setAttribute("TMDB_LIST", movieDbs);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
-        dispatcher.forward(request, response);*/
+        dispatcher.forward(request, response);
     }
 
 }

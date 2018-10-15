@@ -12,6 +12,7 @@ public class TheMovieDbApiUtilTest {
 
     @org.junit.Test
     public void getListFoundMovies() {
+
        List<MovieDb> movieDbs = TheMovieDbApiUtil.getInstance().getListFoundMovies("Batman",2014);
         for (MovieDb m : movieDbs ){
             System.out.println(m.getTitle());

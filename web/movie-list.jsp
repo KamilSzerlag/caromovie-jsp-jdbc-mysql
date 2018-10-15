@@ -69,7 +69,7 @@
             <input type="text" name="year_themoviedb"  title="year_themoviedb"  class="form-control">
             <ul class="list-group" id="myList">
                 <c:forEach var="tempMovieTmdb" items="${TMDB_LIST}">
-                <li class="list-group-item">${tempMovieTmdb.title}</li>
+                <li class="list-group-item">${tempMovieTmdb.getTitle()}</li>
                 </c:forEach>
             </ul>
             </input>
