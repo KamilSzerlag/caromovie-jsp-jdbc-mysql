@@ -41,11 +41,11 @@
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <div class="row top-buffer">
-                    <input type="text" name="title" class="form-control" value="title" title="Title"
+                    <input type="text" name="title" class="form-control" placeholder="Title..." title="Title"
                            required="required">
                 </div>
                 <div class="row top-buffer">
-                    <input type="text" name="year" class="form-control" value="year" title="Year"
+                    <input type="text" name="year" class="form-control" placeholder="Year..." title="Year"
                            required="required">
                 </div>
             </div>
@@ -55,6 +55,7 @@
             </input>
         </form>
     </div>
+
     <div class="row top-buffer">
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
         </div>
