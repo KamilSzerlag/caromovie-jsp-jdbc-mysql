@@ -2,8 +2,11 @@
 #add-button{
     border-radius: 100px;
 }
-#minus-button{
+btn.important-button:active,
+btn.important-button:hover{
     border-radius: 100px;
+    background-color: crimson;
+    color: black;
 }
 .fa-plus{
     font-size: 80px;

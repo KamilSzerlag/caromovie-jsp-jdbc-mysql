@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.List;
@@ -31,6 +30,7 @@ public class ServletMovieController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
+//            TODO updateProgressBar method to removing
             if (request.getParameter("command").equals("UPDATE_PROGRESS"))
                 updateProgressBar(request, response);
 
@@ -50,6 +50,8 @@ public class ServletMovieController extends HttpServlet {
                 addMovie(request, response);
             if (request.getParameter("command").equals("DELETE"))
                 deleteMovie(request, response);
+            if (request.getParameter("command").equals("UPDATE"))
+                updateStatus(request, response);
 
         } catch (Exception e) {
             e.getMessage();
@@ -74,6 +76,10 @@ public class ServletMovieController extends HttpServlet {
     private void moviesList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Movie> movies = MovieDatabaseUtil.getInstance().getMovies();
 
+//        Progress bar added to movie list
+        ProgressBar progressBar = new ProgressBar();
+        String progress = progressBar.progressCalculatorMovies();
+        request.setAttribute("PROGRESS", progress);
         request.setAttribute("MOVIE_LIST", movies);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
@@ -82,9 +88,9 @@ public class ServletMovieController extends HttpServlet {
 
 
     private void updateStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+//  TODO changing Parameter to ID for easier and better movie identification
         try {
-            Movie movie = MovieDatabaseUtil.getInstance().getMovie(request.getParameter("title"));
+            Movie movie = MovieDatabaseUtil.getInstance().getMovie(Integer.parseInt(request.getParameter("id")));
             System.out.println("SERVLET UPDATE STATUS METHOD: Movie title: " + movie.getTitle());
             MovieDatabaseUtil.getInstance().updateMovie(movie);
         } catch (Exception e) {
@@ -94,9 +100,9 @@ public class ServletMovieController extends HttpServlet {
     }
 
     private void deleteMovie(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+//  TODO changing Parameter to ID for easier and better movie identification
         try {
-            Movie movie = MovieDatabaseUtil.getInstance().getMovie(request.getParameter("title"));
+            Movie movie = MovieDatabaseUtil.getInstance().getMovie(Integer.parseInt(request.getParameter("id")));
             System.out.println("SERVLET DELETE METHOD : Movie title: " + movie.getTitle());
             MovieDatabaseUtil.getInstance().deleteMovie(movie);
         } catch (Exception e) {

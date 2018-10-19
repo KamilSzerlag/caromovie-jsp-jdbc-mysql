@@ -36,16 +36,17 @@
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <button id="add-button" class="btn top-buffer" type="submit" onclick=""><i class="fas fa-plus"></i>
+                <button id="add-button" class="btn top-buffer" type="submit" onclick="alert('Movie added!')"><i
+                        class="fas fa-plus"></i>
                 </button>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <div class="row top-buffer">
-                    <input type="text" name="title" class="form-control" value="title" title="Title"
+                    <input type="text" name="title" class="form-control" placeholder="Title..." title="Title"
                            required="required">
                 </div>
                 <div class="row top-buffer">
-                    <input type="text" name="year" class="form-control" value="year" title="Year"
+                    <input type="text" name="year" class="form-control" placeholder="Year..." title="Year"
                            required="required">
                 </div>
             </div>
@@ -59,6 +60,7 @@
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <c:if test="${MOVIE_LIST.size()>0}">
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -70,8 +72,17 @@
                 </thead>
                 <tbody>
                 <form action="ServletMovieController" method="get">
-                    <input type="hidden" name="command" value="DELETE">
+                    <%--<input type="hidden" name="command" value="DELETE">--%>
                     <c:forEach var="tempMovie" items="${MOVIE_LIST}">
+                        <c:url var="deleteMovie" value="ServletMovieController">
+                            <c:param name="command" value="DELETE"></c:param>
+                            <c:param name="id" value="${tempMovie.id}"></c:param>
+
+                        </c:url>
+                        <c:url var="updateLink" value="ServletMovieController">
+                            <c:param name="command" value="UPDATE"></c:param>
+                            <c:param name="id" value="${tempMovie.id}"></c:param>
+                        </c:url>
                         <tr>
 
                             <td>${tempMovie.title}</td>
@@ -81,19 +92,28 @@
                                 <c:otherwise><i class="far fa-times-circle"></i></c:otherwise>
                             </c:choose></td>
                             <td class="for-align">
+                                    <%--TODO title -> id --%>
+                                        <div class="btn-group">
 
-                                <button id="minus-button" class="btn top-buffer for-table" type="submit" name="title"
-                                        value="${tempMovie.title}"><i
-                                        class="fas fa-minus"></i></button>
+                                            <a href="${deleteMovie}" class="btn btn-primary">
+                                                <i
+                                                        class="fas fa-minus"></i>
+                                            </a>
+                                            <a href="${updateLink}" class="btn btn-primary important-button">
+                                                <i class="fas fa-film"></i>
+                                            </a>
+                                        </div>
+
 
                             </td>
 
                         </tr>
                     </c:forEach>
-                    </input>
+                    <%--</input>--%>
                 </form>
                 </tbody>
             </table>
+            </c:if>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
         </div>
@@ -102,14 +122,16 @@
         <form action="ServletMovieController" method="post">
             <input type="hidden" name="command" value="UPDATE_PROGRESS">
             <div class="progress">
-                <c:set var="progress" value="${PROGRESS}" scope="session"></c:set>
-                    <div class="progress-bar" role="progressbar" style="width: ${progress}%; background: hotpink" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100">${progress}%</div>
+                <c:set var="progress" value="${PROGRESS}" scope="request"></c:set>
+                <div class="progress-bar" role="progressbar" style="width: ${progress}%; background: hotpink"
+                     aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100">${progress}%
+                </div>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" align="center">
-                <button type="submit" class="btn btn-primary" style="background: darkcyan; border-color: darkcyan;">Update progress</button>
+
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ">
 

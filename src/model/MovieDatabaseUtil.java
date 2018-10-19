@@ -51,7 +51,7 @@ public class MovieDatabaseUtil {
         return movies;
     }
 
-    //TODO close
+    //TODO close()
     private void close(PreparedStatement preparedStatement, Connection connection, ResultSet resultSet) {
         try {
             if (connection != null)
@@ -68,7 +68,7 @@ public class MovieDatabaseUtil {
         }
     }
 
-    //TODO addMovie
+    //TODO addMovie()
     public void addMovie(Movie movie) {
         //TODO Creating connection
         Connection conn = null;
@@ -91,18 +91,18 @@ public class MovieDatabaseUtil {
         }
     }
 
-    //TODO getMovie
-    public Movie getMovie(String title) throws Exception {
+    //TODO getMovie()
+    public Movie getMovie(int id) throws Exception {
         Connection conn = null;
         PreparedStatement myStm = null;
         ResultSet rst = null;
-        String SQL = "SELECT * FROM movie WHERE movie.title=?";
+        String SQL = "SELECT * FROM movie WHERE movie.id=?";
         Movie movie = null;
         try {
             conn = dataSource.getConnection();
             myStm = conn.prepareStatement(SQL);
 
-            myStm.setString(1, title);
+            myStm.setInt(1, id);
             rst = myStm.executeQuery();
             if (rst.next()) {
                 movie = new Movie(rst.getInt("id"), rst.getString("title"), rst.getString("year"));
