@@ -30,12 +30,10 @@ public class ServletMovieController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            moviesList(request, response);
 
             if (request.getParameter("command").equals("UPDATE_PROGRESS"))
                 updateProgressBar(request, response);
 
-            moviesList(request, response);
 
         } catch (Exception e) {
             e.getMessage();
@@ -46,7 +44,8 @@ public class ServletMovieController extends HttpServlet {
     //TODO Update doGet method for different methods used in JSP file
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            moviesList(request, response);
+            if (request.getParameter("command")==null)
+                moviesList(request, response);
             if (request.getParameter("command").equals("ADD"))
                 addMovie(request, response);
             if (request.getParameter("command").equals("DELETE"))
@@ -109,8 +108,9 @@ public class ServletMovieController extends HttpServlet {
     private void updateProgressBar(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ProgressBar progressBar = new ProgressBar();
         String progress = progressBar.progressCalculatorMovies();
-        HttpSession session = request.getSession();
-        session.setAttribute("PROGRESS", progress);
+        List<Movie> movies = MovieDatabaseUtil.getInstance().getMovies();
+        request.setAttribute("MOVIE_LIST", movies);
+        request.setAttribute("PROGRESS", progress);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/movie-list.jsp");
         dispatcher.forward(request, response);
 

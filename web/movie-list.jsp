@@ -70,7 +70,7 @@
                 </thead>
                 <tbody>
                 <form action="ServletMovieController" method="get">
-
+                    <input type="hidden" name="command" value="DELETE">
                     <c:forEach var="tempMovie" items="${MOVIE_LIST}">
                         <tr>
 
@@ -81,15 +81,16 @@
                                 <c:otherwise><i class="far fa-times-circle"></i></c:otherwise>
                             </c:choose></td>
                             <td class="for-align">
-                                <input type="hidden" name="command" value="DELETE">
+
                                 <button id="minus-button" class="btn top-buffer for-table" type="submit" name="title"
                                         value="${tempMovie.title}"><i
                                         class="fas fa-minus"></i></button>
-                                </input>
+
                             </td>
 
                         </tr>
                     </c:forEach>
+                    </input>
                 </form>
                 </tbody>
             </table>
