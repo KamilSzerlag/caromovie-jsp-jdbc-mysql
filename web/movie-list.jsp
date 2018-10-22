@@ -23,7 +23,7 @@
     <div class="page-header">
         <div class="row">
             <div class="col-lg-6" align="left">
-                <h2 style="color: darkcyan"><b style="color: hotpink"><i>Caro</i></b>Movies</h2>
+                <h2 style="color: darkcyan"><b style="color: crimson"><i>Caro</i></b>Movies</h2>
             </div>
             <div class="col-lg-6" align="right">
                 <h3>because we <i class="fas fa-heart"></i> movies </h3>
@@ -46,7 +46,7 @@
                            required="required">
                 </div>
                 <div class="row top-buffer">
-                    <input type="text" name="year" class="form-control" placeholder="Year..." title="Year"
+                    <input type="number" min="1895" max="2050" name="year" class="form-control" placeholder="Year..." title="Year"
                            required="required">
                 </div>
             </div>
@@ -61,58 +61,58 @@
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <c:if test="${MOVIE_LIST.size()>0}">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Director</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <form action="ServletMovieController" method="get">
-                    <%--<input type="hidden" name="command" value="DELETE">--%>
-                    <c:forEach var="tempMovie" items="${MOVIE_LIST}">
-                        <c:url var="deleteMovie" value="ServletMovieController">
-                            <c:param name="command" value="DELETE"></c:param>
-                            <c:param name="id" value="${tempMovie.id}"></c:param>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <form action="ServletMovieController" method="get">
+                            <%--<input type="hidden" name="command" value="DELETE">--%>
+                        <c:forEach var="tempMovie" items="${MOVIE_LIST}">
+                            <c:url var="deleteMovie" value="ServletMovieController">
+                                <c:param name="command" value="DELETE"></c:param>
+                                <c:param name="id" value="${tempMovie.id}"></c:param>
 
-                        </c:url>
-                        <c:url var="updateLink" value="ServletMovieController">
-                            <c:param name="command" value="UPDATE"></c:param>
-                            <c:param name="id" value="${tempMovie.id}"></c:param>
-                        </c:url>
-                        <tr>
+                            </c:url>
+                            <c:url var="updateLink" value="ServletMovieController">
+                                <c:param name="command" value="UPDATE"></c:param>
+                                <c:param name="id" value="${tempMovie.id}"></c:param>
+                            </c:url>
+                            <tr>
 
-                            <td>${tempMovie.title}</td>
-                            <td>${tempMovie.year}</td>
-                            <td><c:choose>
-                                <c:when test="${tempMovie.watched==true}"><i class="far fa-thumbs-up"></i></c:when>
-                                <c:otherwise><i class="far fa-times-circle"></i></c:otherwise>
-                            </c:choose></td>
-                            <td class="for-align">
-                                    <%--TODO title -> id --%>
-                                        <div class="btn-group">
+                                <td>${tempMovie.title}</td>
+                                <td>${tempMovie.year}</td>
+                                <td><c:choose>
+                                    <c:when test="${tempMovie.watched==true}"><i class="far fa-thumbs-up"></i></c:when>
+                                    <c:otherwise><i class="far fa-times-circle"></i></c:otherwise>
+                                </c:choose></td>
+                                <td class="for-align">
+                                        <%--TODO title -> id --%>
+                                    <div class="btn-group">
 
-                                            <a href="${deleteMovie}" class="btn btn-primary">
-                                                <i
-                                                        class="fas fa-minus"></i>
-                                            </a>
-                                            <a href="${updateLink}" class="btn btn-primary important-button">
-                                                <i class="fas fa-film"></i>
-                                            </a>
-                                        </div>
+                                        <a href="${deleteMovie}" class="btn btn-primary">
+                                            <i
+                                                    class="fas fa-minus"></i>
+                                        </a>
+                                        <a href="${updateLink}" class="btn btn-primary important-button">
+                                            <i class="fas fa-film"></i>
+                                        </a>
+                                    </div>
 
 
-                            </td>
+                                </td>
 
-                        </tr>
-                    </c:forEach>
-                    <%--</input>--%>
-                </form>
-                </tbody>
-            </table>
+                            </tr>
+                        </c:forEach>
+                            <%--</input>--%>
+                    </form>
+                    </tbody>
+                </table>
             </c:if>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -123,7 +123,7 @@
             <input type="hidden" name="command" value="UPDATE_PROGRESS">
             <div class="progress">
                 <c:set var="progress" value="${PROGRESS}" scope="request"></c:set>
-                <div class="progress-bar" role="progressbar" style="width: ${progress}%; background: hotpink"
+                <div class="progress-bar" role="progressbar" style="width: ${progress}%; background: crimson"
                      aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100">${progress}%
                 </div>
             </div>
@@ -141,11 +141,7 @@
         </form>
     </div>
 </div>
-<%--<footer class="footer">
-    <div class="container" align="center">
-        <span class="text-muted">Created by<i class="fas fa-user-astronaut"></i> Kamil Szerląg</span>
-    </div>
-</footer>--%>
+
 </body>
 </html>
 
