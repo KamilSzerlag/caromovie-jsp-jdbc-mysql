@@ -18,7 +18,7 @@ How to start Application:
 
 Create User in MySQL:
 ```sql
-CREATE USER 'webmovieuser'@localhost IDENTIFIED BY 'webusermovie';
+CREATE USER 'webmovieuser'@localhost IDENTIFIED BY 'webmovieuser';
 
 GRANT ALL PRIVILEGES ON * . * TO 'webmovieuser'@'localhost';
 ```
