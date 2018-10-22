@@ -43,7 +43,7 @@ CREATE TABLE `movie` (
 
 If you have problems with MySQL auth use:
 ```sql
-alter user 'webstudent'@'localhost' identified with mysql_native_password by 'webstudent';
+alter user 'webmovieuser'@'localhost' identified with mysql_native_password by 'webmovieuser';
 ```
 
 When your Tomcat is running open ```http://localhost:8080/```
